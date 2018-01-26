@@ -1,3 +1,66 @@
-<p>
-  get-data works!
-</p>
+<div class="container" *ngFor = "let data of userData">
+  <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#{{data.CompanyID}}">
+              <span class="col-md-2">{{data.CompanyID}}</span>
+              <span class="col-md-4">{{data.CompanyName}}</span>
+              <span class="col-md-*">{{data.City}}</span>
+            </a>
+        </h4>
+      </div>
+      <div id="{{data.CompanyID}}" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="col-md-2">Address</th>
+                <th class="col-md-2">Created Date</th>
+                <th class="col-md-3">Contact Persons</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span *ngIf="data.StreetAddress">{{data.StreetAddress}},</span>
+                  <span *ngIf="data.StreetAddress2">{{data.StreetAddress2}},</span><br />
+                  <span *ngIf="data.City">{{data.City}},</span>
+                  <span *ngIf="data.State">{{data.State}},</span>
+                  <span *ngIf="data.ZipCode">{{data.ZipCode}}</span><br />
+                  <span *ngIf="data.Country">{{data.Country}}</span>
+                </td>
+                <td>
+                  <span>{{data.CreatedDate}}</span>
+                </td>
+                <td class="col-md-3">
+                  <li class="panel-group" *ngFor = "let contactData of data.Contacts" >
+                        <a data-toggle="collapse" href="#{{contactData.ContactId}}">
+                            <span *ngIf="contactData.firstname">{{contactData.firstname}}</span>
+                            <span *ngIf="contactData.LastName">{{contactData.LastName}}</span>
+                            <span *ngIf="contactData.title"> ({{contactData.title}})</span>
+                        </a>
+                        <ul id="{{contactData.ContactId}}" class="panel-collapse collapse">
+                          <span *ngIf="contactData.ContactAddress">{{contactData.ContactAddress}},</span>
+                          <span *ngIf="contactData.Contactaddress2">{{contactData.Contactaddress2}},</span><br />
+                          <span *ngIf="contactData.ContactCity">{{contactData.ContactCity}}.</span>
+                          <span *ngIf="contactData.ContactState">{{contactData.ContactState}}</span>
+                          <span *ngIf="contactData.ContactZip">{{contactData.ContactZip}}</span>
+                          <div *ngIf="contactData.PrimaryPhone">Primary Phone: {{contactData.PrimaryPhone}}</div>
+                          <div *ngIf="contactData.MobilePhone">Mobile Number: {{contactData.MobilePhone}}</div>
+                          <div *ngIf="contactData.HomePhone">Home Phone: {{contactData.HomePhone}}</div>
+                          <div *ngIf="contactData.fax">Fax: {{contactData.fax}}</div>
+                          <div *ngIf="contactData.email">Email: {{contactData.email}}</div>
+                          <div *ngIf="contactData.email2">Secondary Email: {{contactData.email2}}</div>
+                          <div *ngIf="contactData.birthday">Birthday: {{contactData.birthday}}</div>
+                        </ul>
+                  </li>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
