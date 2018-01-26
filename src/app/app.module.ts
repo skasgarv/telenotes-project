@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule }    from '@angular/common/http';
 
-import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
 
 
@@ -21,7 +20,6 @@ import { GetDataComponent } from './get-data/get-data.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatExpansionModule,
     MatButtonModule,
     HttpClientModule
   ],
