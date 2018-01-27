@@ -11,17 +11,24 @@ export class GetDataComponent implements OnInit {
 
   APIendPoint:string = "http://devapp.telenotes.com/api/data/suhas";
   userData: any;
+  openModal = false;
+  modalData = [];
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.getUserData();
+    this.openModal = false;
   }
 
   getUserData() {
     this.http.get(this.APIendPoint).subscribe( response => {
-      console.log(response);
       this.userData = response;
     })
+  }
+
+  addDataToModal(data) {
+    this.modalData = [data];
+    this.openModal = true;
   }
 
 }

@@ -1,0 +1,82 @@
+<form>
+  <div class="form-group">
+    <label for="companyName">Company Name</label>
+    <input type="text" class="form-control" id="companyName" placeholder="123456" value="{{individualData.CompanyName}}">
+    <label for="accountId">Account ID</label>
+    <input type="text" class="form-control" id="accountId" value="{{individualData.AccountId}}">
+    <label for="companyAddress1">Address 1</label>
+    <input type="text" class="form-control" id="companyAddress1" placeholder="1234 Main St" value="{{individualData.StreetAddress}}">
+    <label for="companyAddress2">Address 2</label>
+    <input type="text" class="form-control" id="companyAddress2" value="{{individualData.StreetAddress2}}">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="companyCity">City</label>
+      <input type="text" class="form-control" id="companyCity" value="{{individualData.City}}">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="companyState">State</label>
+      <select id="companyState" class="form-control" value="{{individualData.State}}">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="companyZip">Zip</label>
+      <input type="text" class="form-control" id="companyZip" value="{{individualData.ZipCode}}">
+    </div>
+    <label for="companyCountry">Country</label>
+    <input type="text" class="form-control" id="companyCountry" value="{{individualData.Country}}">
+    <label for="companyWebsite">WebSite</label>
+    <input type="text" class="form-control" id="companyWebsite" value="{{individualData.webSite}}">
+  </div>
+</form>
+<hr />
+<strong>Contact Person Info</strong><br />
+<form *ngFor="let contactData of individualData.Contacts">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="firstname">First Name</label>
+      <input type="text" class="form-control" id="firstname" placeholder="First Name" value="{{contactData.firstname}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="lastname">Last Name</label>
+      <input type="text" class="form-control" id="lastname" placeholder="Last Name" value="{{contactData.LastName}}">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="Title" value="{{contactData.title}}">
+    </div>
+  </div>
+    <div class="form-row form-group">
+      <label for="inputEmail">Email</label>
+      <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{contactData.email}}">
+    </div>
+  <div class="form-group">
+    <label for="contactAddress1">Address 1</label>
+    <input type="text" class="form-control" id="contactAddress1" placeholder="1234 Main St" value="{{contactData.ContactAddress}}">
+    <label for="contactAddress2">Address 2</label>
+    <input type="text" class="form-control" id="contactAddress2" value="{{contactData.ContactAddress2}}">
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="contactCity">City</label>
+      <input type="text" class="form-control" id="contactCity" value="{{contactData.ContactCity}}">
+    </div>
+    <div class="form-group col-md-4">
+      <label for="contactState">State</label>
+      <select id="contactState" class="form-control" value="{{contactData.ContactState}}">
+        <option selected></option>
+        <option>...</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="contactZip">Zip</label>
+      <input type="text" class="form-control" id="contactZip" value="{{contactData.ContactZip}}">
+    </div>
+    <label for="contactCountry">Country</label>
+    <input type="text" class="form-control" id="contactCountry" value="{{contactData.ContactCountry}}">
+    <label for="birthday">Birthday</label>
+    <input type="text" class="form-control" id="birthday" value="{{contactData.birthday}}">
+  </div>
+</form>
