@@ -11,24 +11,24 @@ export class FormComponent implements OnInit {
   @Input() individualData;
   @Input() createForm;
   constructor(public fb: FormBuilder) { }
-  public this.companyForm = this.fb.group({
-   companyName:"",
-   accountId: "",
-   companyAddress1:"",
-   companyAddress2:"",
-   companyCity:"",
-   companyZip:"",
-   companyState:"",
-   companyCountry:"",
-   companyWebsite:"",
-   Contacts: this.fb.array([]),
-  });
-
+  public companyForm: FormGroup;
   ngOnInit() {
+    this.companyForm = this.fb.group({
+     companyName:"",
+     accountId: "",
+     companyAddress1:"",
+     companyAddress2:"",
+     companyCity:"",
+     companyZip:"",
+     companyState:"",
+     companyCountry:"",
+     companyWebsite:"",
+     Contacts: this.fb.array([]),
+    });
     //map individual contacts to form if present else show empty form
     if(this.individualData){
       for(let i=0;i<this.individualData.Contacts.length; i++) {
-        this.addNewContact(this.individualData.Contacts[i]);
+        this.addNewContactData(this.individualData.Contacts[i]);
       }
       //patch the form data
       this.companyForm.patchValue({
@@ -43,7 +43,9 @@ export class FormComponent implements OnInit {
         companyWebsite:this.individualData.webSite ? this.individualData.webSite : "N/A",
       });
     } else {
-      this.addNewContact();
+      // Form should be empty. Send empty data
+      let emptyIndividualData: object = {};
+      this.addNewContactData(emptyIndividualData);
       //create an empty form with no data
       this.companyForm.patchValue({
         companyName: "",
@@ -83,18 +85,15 @@ export class FormComponent implements OnInit {
         });
     }
 
-  // Add new contact form
-  addNewContact(initData:object) {
+
+  // Show contact form with existing data
+  addNewContactData(initData:object) {
     const control = <FormArray>this.companyForm.controls['Contacts'];
-    if(initData) {
-      const addrCtrl = this.initContactData(initData);
-    } else {
-      const addrCtrl = this.initContactData();
-    }
+    let addrCtrl: any;
+    addrCtrl = this.initContactData(initData);
     control.push(addrCtrl);
-
-
   }
+
 
   // Option to remove the contact
   removeContactInfo(indexValue:number) {
