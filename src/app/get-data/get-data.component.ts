@@ -31,4 +31,13 @@ export class GetDataComponent implements OnInit {
     this.openModal = true;
   }
 
+  deleteData(deleteData){
+    let deleteCompanyConfirm = confirm("Delete Company?");
+    if(deleteCompanyConfirm) {
+      console.log("Data to be deleted", deleteData)
+      
+    }
+    //http://devapp.telenotes.com/api/data/suhas/[CompanyID]
+  }
+
 }
