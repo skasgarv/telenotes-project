@@ -1,0 +1,111 @@
+<div *ngIf="createForm" class="modal-header">
+  <h2 class="modal-title" id="exampleModalLabel">Create New Info</h2>
+</div>
+<div *ngIf="!createForm" class="modal-header">
+  <h2 class="modal-title" id="exampleModalLabel">Update Info</h2>
+</div>
+
+<form [formGroup]="companyForm">
+
+  <div class="form-group">
+
+    <label for="companyName">Company Name</label>
+    <small *ngIf="!companyForm.controls.CompanyName.valid" class="text-danger">
+              Company Name required!
+    </small>
+    <input type="text" class="form-control" id="CompanyName"
+      placeholder="Name of the Company" formControlName="CompanyName">
+
+    <label for="accountId">Company ID</label>
+    <input type="text" class="form-control" id="accountId"
+      name="CompanyID" formControlName="CompanyID">
+
+    <label for="accountId">Account ID</label>
+    <input type="text" class="form-control" id="accountId"
+      name="AccountId" formControlName="AccountId">
+
+    <label for="companyAddress1">Address 1</label>
+    <input type="text" class="form-control" id="StreetAddress"
+      placeholder="1234 Main St" formControlName="StreetAddress">
+
+    <label for="companyAddress2">Address 2</label>
+    <input type="text" class="form-control" id="StreetAddress2"
+     formControlName="StreetAddress2">
+
+  </div>
+
+
+  <div class="form-row">
+
+    <div class="form-group col-md-6">
+      <label for="companyCity">City</label>
+      <input type="text" class="form-control" id="City" formControlName="City">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyState">State</label>
+      <input type="text" class="form-control" id="State" formControlName="State">
+    </div>
+
+    <div class="form-group col-md-2">
+      <label for="companyZip">Zip</label>
+      <input type="text" class="form-control" id="ZipCode" formControlName="ZipCode">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyCountry">Country</label>
+      <input type="text" class="form-control" id="Country" formControlName="Country">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyWebsite">WebSite</label>
+      <input type="text" class="form-control" id="webSite" formControlName="webSite">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyWebsite">Date Created</label>
+      <input type="text" class="form-control" id="CreatedDate" formControlName="CreatedDate">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyWebsite">Type</label>
+      <input type="text" class="form-control" id="CreatedDate" formControlName="status">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="companyWebsite">Status</label>
+      <input type="text" class="form-control" id="CreatedDate" formControlName="Type">
+    </div>
+
+  </div>
+  <hr />
+  <div formArrayName="Contacts">
+    <div *ngFor="let address of companyForm.controls.Contacts.controls; let i=index" class="panel panel-default">
+      <div class="panel-heading">
+        <span>Contact Info {{i + 1}}</span>
+        <span class="glyphicon glyphicon-remove pull-right"
+          *ngIf="companyForm.controls.Contacts.controls.length > 1"
+          (click)="removeContactInfo(i)"></span>
+      </div>
+      <div class="panel-body" [formGroupName]="i">
+        <contact-form [group]="companyForm.controls.Contacts.controls[i]"></contact-form>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <div class="margin-20">
+    <a (click)="addNewContactData()" style="cursor:pointer">Add Another Contact Info +</a>
+  </div>
+</form>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <button *ngIf="createForm" type="button" class="btn btn-primary"
+    (click)="updateNewData()" data-dismiss="modal" [disabled]="!companyForm.valid">Create</button>
+  <button *ngIf="!createForm" type="button" class="btn btn-primary"
+    (click)="updateForm()" data-dismiss="modal" [disabled]="!companyForm.valid || !companyForm.dirty">Update</button>
+  <small *ngIf="!companyForm.controls.CompanyName.dirty" class="text-danger">
+     Form Not Updated. Cannot Submit
+  </small>
+</div>
