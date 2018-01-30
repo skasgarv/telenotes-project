@@ -16,7 +16,7 @@ export class UpdateInfoService {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type','application/json');
 
-    let bodyString = body;
+    let bodyString = JSON.stringify(body);
     console.log("Headers =", headers);
     return this.http.post(this.createInfoAPIEndPoint,bodyString, {
       headers: new HttpHeaders().delete('Access-Control-Request-Headers'),
