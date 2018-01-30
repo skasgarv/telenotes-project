@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
+import { DeleteInfoService } from '../deleteInfo.service';
+
 @Component({
   selector: 'app-get-data',
   templateUrl: './get-data.component.html',
@@ -9,11 +11,15 @@ import { Observable } from 'rxjs/Observable';
 })
 export class GetDataComponent implements OnInit {
 
-  APIendPoint:string = "http://devapp.telenotes.com/api/data/suhas";
+  APIendPoint:string = "http://devapp.telenotes.com/api/data/skasgarv";
   userData: any;
   openModal = false;
   modalData = [];
-  constructor(private http: HttpClient) { }
+
+  searchData: string;
+
+  constructor(private http: HttpClient,
+    private deleteInfo: DeleteInfoService) { }
 
   ngOnInit() {
     this.getUserData();
@@ -21,8 +27,9 @@ export class GetDataComponent implements OnInit {
   }
 
   getUserData() {
-    this.http.get(this.APIendPoint).subscribe( response => {
-      this.userData = response;
+    this.http.get(this.APIendPoint)
+      .subscribe( response => {
+        this.userData = response;
     })
   }
 
@@ -34,8 +41,9 @@ export class GetDataComponent implements OnInit {
   deleteData(deleteData){
     let deleteCompanyConfirm = confirm("Delete Company?");
     if(deleteCompanyConfirm) {
-      console.log("Data to be deleted", deleteData)
-      
+      this.deleteInfo.deleteInfo(deleteData.CompanyID).subscribe(response => {
+        console.log("Deleted?",response)
+      })
     }
     //http://devapp.telenotes.com/api/data/suhas/[CompanyID]
   }

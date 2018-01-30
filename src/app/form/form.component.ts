@@ -2,6 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms'
 import {FormArray, FormControl, FormGroup} from '@angular/forms';
 
+import { CreateInfoService } from '../create-info.service';
+import { UpdateInfoService } from '../updateInfo.service';
+
+
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -10,21 +14,31 @@ import {FormArray, FormControl, FormGroup} from '@angular/forms';
 export class FormComponent implements OnInit {
   @Input() individualData;
   @Input() createForm;
-  constructor(public fb: FormBuilder) { }
+
+  constructor(public fb: FormBuilder,
+    private createInfo: CreateInfoService,
+    private updateInfo: UpdateInfoService) { }
+
   public companyForm: FormGroup;
+
   ngOnInit() {
     this.companyForm = this.fb.group({
-     companyName:"",
-     accountId: "",
-     companyAddress1:"",
-     companyAddress2:"",
-     companyCity:"",
-     companyZip:"",
-     companyState:"",
-     companyCountry:"",
-     companyWebsite:"",
-     Contacts: this.fb.array([]),
+      CompanyID:"",
+      AccountId:"",
+      CompanyName:["",Validators.required],
+      StreetAddress:"",
+      StreetAddress2:"",
+      City:"",
+      ZipCode:"",
+      State:"",
+      Country:"",
+      webSite:"",
+      CreatedDate:"",
+      status:"",
+      Type: "",
+      Contacts: this.fb.array([]),
     });
+
     //map individual contacts to form if present else show empty form
     if(this.individualData){
       for(let i=0;i<this.individualData.Contacts.length; i++) {
@@ -32,56 +46,51 @@ export class FormComponent implements OnInit {
       }
       //patch the form data
       this.companyForm.patchValue({
-        companyName: this.individualData.CompanyName ? this.individualData.CompanyName : "N/A",
-        accountId: this.individualData.AccountId ? this.individualData.AccountId : "N/A",
-        companyAddress1:this.individualData.StreetAddress ? this.individualData.StreetAddress : "N/A",
-        companyAddress2:this.individualData.StreetAddress2 ? this.individualData.StreetAddress2 : "N/A",
-        companyCity:this.individualData.City ? this.individualData.City : "N/A",
-        companyZip:this.individualData.ZipCode ? this.individualData.ZipCode : "N/A",
-        companyState:this.individualData.State ? this.individualData.State : "N/A",
-        companyCountry:this.individualData.Country ? this.individualData.Country : "N/A",
-        companyWebsite:this.individualData.webSite ? this.individualData.webSite : "N/A",
+        CompanyID: this.individualData.CompanyID ? this.individualData.CompanyID: "N/A",
+        AccountId: this.individualData.AccountId ? this.individualData.AccountId: "N/A",
+        CompanyName: this.individualData.CompanyName ? this.individualData.CompanyName : "N/A",
+        StreetAddress:this.individualData.StreetAddress ? this.individualData.StreetAddress : "N/A",
+        StreetAddress2:this.individualData.StreetAddress2 ? this.individualData.StreetAddress2 : "N/A",
+        City:this.individualData.City ? this.individualData.City : "N/A",
+        ZipCode:this.individualData.ZipCode ? this.individualData.ZipCode : "N/A",
+        State:this.individualData.State ? this.individualData.State : "N/A",
+        Country:this.individualData.Country ? this.individualData.Country : "N/A",
+        webSite:this.individualData.webSite ? this.individualData.webSite : "N/A",
+        CreatedDate:this.individualData.CreatedDate ? this.individualData.CreatedDate : "N/A",
+        status:this.individualData.status ? this.individualData.status : "N/A",
+        Type: this.individualData.Type ? this.individualData.Type : "N/A"
       });
-    } else {
+    }
+    else {
       // Form should be empty. Send empty data
       let emptyIndividualData: object = {};
       this.addNewContactData(emptyIndividualData);
-      //create an empty form with no data
-      this.companyForm.patchValue({
-        companyName: "",
-        accountId: "",
-        companyAddress1:"",
-        companyAddress2:"",
-        companyCity:"",
-        companyZip:"",
-        companyState:"",
-        companyCountry:"",
-        companyWebsite:"",
-      });
     }
   }
 
   // initialize form data if data present else initialize as empty form
   initContactData(data) {
         return this.fb.group({
-            firstname:[data ? data.firstname : "", Validators.required],
-            lastname:[data ? data.LastName : ""],
+            ContactId: [data ? data.ContactId : ""],
             title:[data ? data.title : ""],
-            contactId: [data ? data.ContactId : ""],
-            contactCity:[data ? data.ContactCity : ""],
-            contactState:[data ? data.ContactState : ""],
-            contactZip:[data ? data.ContactZip : ""],
+            firstname:[data ? data.firstname : ""],
+            LastName:[data ? data.LastName : ""],
+            ContactCity:[data ? data.ContactCity : ""],
+            ContactState:[data ? data.ContactState : ""],
+            ContactZip:[data ? data.ContactZip : ""],
             PrimaryPhone:[data ? data.PrimaryPhone : ""],
             ext:[data ? data.ext : ""],
-            mobilePh: [data ? data.MobilePhone : ""],
+            MobilePhone: [data ? data.MobilePhone : ""],
             fax:[data ? data.fax : ""],
             email:[data ? data.email : ""],
-            contactAddress:[data ? data.ContactAddress : ""],
-            contactaddress2:[data ? data.Contactaddress2 : ""],
-            homePhone:[data ? data.HomePhone : ""],
+            ContactAddress:[data ? data.ContactAddress : ""],
+            Contactaddress2:[data ? data.Contactaddress2 : ""],
+            HomePhone:[data ? data.HomePhone : ""],
             email2:[data? data.email2 : ""],
             birthday:[data ? data.birthday : ""],
-            dept:[data? data.dept : ""]
+            dept:[data? data.dept : ""],
+            status:[data? data.status: ""],
+            Type: [data? data.Type: ""]
         });
     }
 
@@ -107,12 +116,20 @@ export class FormComponent implements OnInit {
   // Post call to API to update data in DB
   updateForm() {
     // do a post call here from service
-    console.log("Post this data=",this.companyForm.value)
+    console.log("Post this data=",this.companyForm.value);
+    this.updateInfo.updateInfo(this.companyForm.value).subscribe(response => {
+      console.log("Updated=", response)
+    })
+
   }
 
   updateNewData() {
     // do a post call here from service
     console.log("Create this data and post it=",this.companyForm.value)
+    this.createInfo.createNewInfo(this.companyForm.value).subscribe(response => {
+      console.log(response)
+    })
+
   }
 
 }
