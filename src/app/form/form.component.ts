@@ -94,7 +94,9 @@ export class FormComponent implements OnInit {
         });
     }
 
-
+  getCompanyFormControls(companyForm) {
+    return companyForm.get('Contacts').controls
+  }
   // Show contact form with existing data
   addNewContactData(initData:object) {
     const control = <FormArray>this.companyForm.controls['Contacts'];
@@ -129,7 +131,6 @@ export class FormComponent implements OnInit {
     this.createInfo.createNewInfo(this.companyForm.value).subscribe(response => {
       console.log(response)
     })
-
   }
 
 }
