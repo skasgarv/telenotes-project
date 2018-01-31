@@ -8,14 +8,12 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DeleteInfoService {
-  headers: Headers;
-  options: RequestOptions;
-  createInfoAPIEndPoint:string="http://devapp.telenotes.com/api/data/skasgarv/"
+  deleteInfoAPIEndPoint:string="http://devapp.telenotes.com/api/data/skasgarv/"
   constructor(private http: Http) {
   }
 
   deleteInfo (CompanyID: number): Observable<any> {
-    return this.http.delete(this.createInfoAPIEndPoint + CompanyID)
+    return this.http.delete(this.deleteInfoAPIEndPoint + CompanyID)
       .map((res:Response) => {
         console.log("Response", res)
         res.json()

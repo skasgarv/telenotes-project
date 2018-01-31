@@ -1,43 +1,47 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { HttpClientModule }    from '@angular/common/http';
-import {HttpModule} from '@angular/http'
+import { BrowserModule } from '@angular/platform-browser';
+import { FormComponent } from './form/form.component';
 import { FormsModule } from '@angular/forms';
+import {HttpModule} from '@angular/http'
+import { HTTP_INTERCEPTORS, HttpClientModule }    from '@angular/common/http';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { GetDataComponent } from './get-data/get-data.component';
 import { AddDataComponent } from './add-data/add-data.component';
-import { FormComponent } from './form/form.component';
-import { CreateInfoComponent } from './create-info/create-info.component';
+import { AppComponent } from './app.component';
 import {ContactFormComponent} from './form/contactForm.component';
-import {SearchPipe} from './searchPipe';
+import { CreateInfoComponent } from './create-info/create-info.component';
 import {CreateInfoService} from './create-info.service';
-import { DeleteInfoService} from './deleteInfo.service';
+import { DeleteInfoService } from './deleteInfo.service';
+import { GetDataComponent } from './get-data/get-data.component';
+import {SearchPipe} from './searchPipe';
 import { UpdateInfoService } from './updateInfo.service';
+
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
-    GetDataComponent,
     AddDataComponent,
-    FormComponent,
-    CreateInfoComponent,
+    AppComponent,
     ContactFormComponent,
+    CreateInfoComponent,
+    FormComponent,
+    GetDataComponent,
+    NavbarComponent,
     SearchPipe,
-
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     FormsModule,
+    HttpClientModule,
+    HttpModule,
     ReactiveFormsModule,
-    HttpModule
   ],
-  providers: [CreateInfoService,DeleteInfoService, UpdateInfoService],
+  providers: [
+    CreateInfoService,
+    DeleteInfoService,
+    UpdateInfoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

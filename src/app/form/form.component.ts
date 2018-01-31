@@ -97,6 +97,7 @@ export class FormComponent implements OnInit {
   getCompanyFormControls(companyForm) {
     return companyForm.get('Contacts').controls
   }
+
   // Show contact form with existing data
   addNewContactData(initData:object) {
     const control = <FormArray>this.companyForm.controls['Contacts'];
@@ -117,20 +118,11 @@ export class FormComponent implements OnInit {
 
   // Post call to API to update data in DB
   updateForm() {
-    // do a post call here from service
-    console.log("Post this data=",this.companyForm.value);
-    this.updateInfo.updateInfo(this.companyForm.value).subscribe(response => {
-      console.log("Updated=", response)
-    })
-
+    this.updateInfo.updateInfo(this.companyForm.value);
   }
 
   updateNewData() {
-    // do a post call here from service
-    console.log("Create this data and post it=",this.companyForm.value)
-    this.createInfo.createNewInfo(this.companyForm.value).subscribe(response => {
-      console.log(response)
-    })
+    this.createInfo.createNewInfo(this.companyForm.value);
   }
 
 }
