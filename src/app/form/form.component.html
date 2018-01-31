@@ -62,9 +62,9 @@
       <input type="text" class="form-control" id="webSite" formControlName="webSite">
     </div>
 
-    <div class="form-group col-md-6">
+    <div *ngIf="createForm" class="form-group col-md-6">
       <label for="companyWebsite">Date Created</label>
-      <input type="text" class="form-control" id="CreatedDate" formControlName="CreatedDate">
+      <input disabled type="text" class="form-control" id="CreatedDate" formControlName="CreatedDate">
     </div>
 
     <div class="form-group col-md-6">
@@ -80,9 +80,7 @@
   </div>
   <hr />
   <div formArrayName="Contacts">
-    <div *ngFor="let address of getCompanyFormControls(companyForm); let i=index" class="panel panel-default">
-    <!-- <div *ngFor="let address of companyForm.get('Contacts'); let i=index;" class="panel panel-default"> -->
-    <!-- <div *ngFor="let address of companyForm.controls.Contacts.controls; let i=index" class="panel panel-default"> -->
+    <div *ngFor="let address of getCompanyFormControls(companyForm); let i=index">
       <div class="panel-heading">
         <span>Contact Info {{i + 1}}</span>
         <span class="glyphicon glyphicon-remove pull-right"

@@ -33,7 +33,7 @@ export class FormComponent implements OnInit {
       State:"",
       Country:"",
       webSite:"",
-      CreatedDate:"",
+      CreatedDate:new Date().toLocaleDateString() + " " +new Date().toLocaleTimeString(),
       status:"",
       Type: "",
       Contacts: this.fb.array([]),
@@ -118,11 +118,14 @@ export class FormComponent implements OnInit {
 
   // Post call to API to update data in DB
   updateForm() {
-    this.updateInfo.updateInfo(this.companyForm.value);
+    this.updateInfo.updateInfo(this.companyForm.value).subscribe();
   }
 
   updateNewData() {
-    this.createInfo.createNewInfo(this.companyForm.value);
+    this.companyForm.patchValue({
+      CreatedDate: new Date().toISOString()
+    })
+    this.createInfo.createNewInfo(this.companyForm.value).subscribe();
   }
 
 }

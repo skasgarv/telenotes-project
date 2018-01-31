@@ -41,11 +41,8 @@ export class GetDataComponent implements OnInit {
   deleteData(deleteData){
     let deleteCompanyConfirm = confirm("Delete Company?");
     if(deleteCompanyConfirm) {
-      this.deleteInfo.deleteInfo(deleteData.CompanyID).subscribe(response => {
-        console.log("Deleted?",response)
-      })
+      this.deleteInfo.deleteInfo(deleteData.CompanyID).subscribe();
     }
-    //http://devapp.telenotes.com/api/data/suhas/[CompanyID]
   }
 
 }
